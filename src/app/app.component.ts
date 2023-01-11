@@ -80,6 +80,7 @@ export class AppComponent {
      * Config Related Subscriptions
      * You can remove this if you don't need the functionality of being able to enable specific configs with queryParams
      * Example: example.com/?layout=apollo&style=default
+     * here
      */
     this.route.queryParamMap.subscribe(queryParamMap => {
       if (queryParamMap.has('layout')) {
