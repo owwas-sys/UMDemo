@@ -17,6 +17,15 @@ const routes: Routes = [
   {
     path: 'custom-layout',
     component: CustomLayoutComponent,
+    children: [
+      {
+        path: 'add-role',
+        loadChildren: () => import('./roles/components/add-role/form-elements.module').then(m => m.FormElementsModule),
+            data: {
+              containerEnabled: true
+            }
+      }
+    ]
   }
 ];
 

@@ -1,0 +1,116 @@
+<vex-secondary-toolbar current="Add Role">
+  <vex-breadcrumbs [crumbs]="['User Roles', 'Add Role']" class="flex-auto"></vex-breadcrumbs>
+
+  <button class="ml-2" color="primary" mat-icon-button type="button">
+    <mat-icon svgIcon="mat:more_vert"></mat-icon>
+  </button>
+</vex-secondary-toolbar>
+
+
+<div [@stagger]="true" class="p-gutter container">
+
+  <div class="flex flex-col sm:flex-row gap-4">
+    <div @fadeInUp class="card flex-auto">
+      <div class="px-6 py-4 border-b flex items-center">
+        <h2 class="title m-0">Add Role</h2>
+      </div>
+
+      <div class="px-6 py-4 flex flex-col">
+
+        <div class="flex flex-col sm:flex-row sm:gap-4">
+          <mat-form-field class="flex-auto">
+            <mat-label>Name (Arabic)</mat-label>
+            <input matInput required>
+          </mat-form-field>
+          <mat-form-field class="flex-auto">
+            <mat-label>Name (English)</mat-label>
+            <input matInput required>
+          </mat-form-field>
+        </div>
+
+        <mat-form-field>
+          <mat-label>Description</mat-label>
+          <input #lengthHint matInput maxlength="200" required>
+          <mat-hint align="start">Max 200 letters</mat-hint>
+          <mat-hint align="end">{{lengthHint.value.length}}/200</mat-hint>
+        </mat-form-field>
+
+        <div class="flex flex-col sm:flex-row sm:gap-4">
+          <mat-form-field class="flex-auto">
+            <mat-label>Party Type</mat-label>
+            <input [formControl]="partyTypeCtrl" [matAutocomplete]="auto" matInput>
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option *ngFor="let partyType of filteredpartyTypes$ | async" [value]="partyType.name">
+                <span class="body-1">{{ partyType.name }}</span>
+              </mat-option>
+            </mat-autocomplete>
+  
+            <button class="text-secondary" mat-icon-button matSuffix type="button">
+              <mat-icon svgIcon="mat:arrow_drop_down"></mat-icon>
+            </button>
+          </mat-form-field>
+  
+          <mat-form-field class="flex-auto">
+            <mat-label>Party</mat-label>
+            <input [formControl]="partyCtrl" [matAutocomplete]="auto" matInput>
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option *ngFor="let party of filteredparties$ | async" [value]="party.name">
+                <span class="body-1">{{ party.name }}</span>
+              </mat-option>
+            </mat-autocomplete>
+  
+            <button class="text-secondary" mat-icon-button matSuffix type="button">
+              <mat-icon svgIcon="mat:arrow_drop_down"></mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
+        
+        <div class="flex items-center justify-end gap-2">
+          <button mat-button type="button">Cancel</button>
+          <button color="primary" mat-raised-button type="button">Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<mat-accordion>
+  <mat-expansion-panel (opened)="panelOpenState = true"
+                       (closed)="panelOpenState = false">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Module - Administration
+      </mat-panel-title>
+      <mat-panel-description>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <mat-expansion-panel hideToggle>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Service/Feature - Transport Companies
+        </mat-panel-title>
+        <mat-panel-description>
+          Permissions
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <mat-radio-group class="flex gap-4" color="accent">
+            <mat-slide-toggle [checked]="false" color="primary" labelPosition="before">View
+            </mat-slide-toggle>
+            <mat-slide-toggle [checked]="false" color="primary" labelPosition="before">Add
+            </mat-slide-toggle>
+            <mat-slide-toggle [checked]="false" color="primary" labelPosition="before">Edit
+            </mat-slide-toggle>
+            <mat-slide-toggle [checked]="false" color="primary" labelPosition="before">Delete
+            </mat-slide-toggle>
+            <mat-slide-toggle [checked]="false" color="primary" labelPosition="before">Approve/Reject
+            </mat-slide-toggle>
+            <mat-slide-toggle [checked]="false" color="primary" labelPosition="before">Print List
+            </mat-slide-toggle>
+            <mat-slide-toggle [checked]="false" color="primary" labelPosition="before">Add Busses
+            </mat-slide-toggle>
+            <mat-slide-toggle [checked]="false" color="primary" labelPosition="before">Add Drivers
+            </mat-slide-toggle>
+          </mat-radio-group>
+    </mat-expansion-panel>
+  </mat-expansion-panel>
+</mat-accordion>
