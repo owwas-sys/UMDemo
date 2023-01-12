@@ -72,7 +72,7 @@ You can change these values even at run-time and the page will adjust to the cha
 
 ```typescript
 {
-  id: 'vex-default',
+  id: 'vex-layout-hermes',
   layout: 'horizontal',
   boxed: false,
   sidenav: {
