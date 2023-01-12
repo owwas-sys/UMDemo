@@ -122,13 +122,20 @@ export class AppComponent {
     this.navigationService.items = [
       {
         type: 'subheading',
-        label: 'Dashboards',
+        label: 'User Management',
         children: [
           {
             type: 'link',
-            label: 'Analytics',
-            route: '/',
-            icon: 'mat:insights',
+            label: 'User Roles',
+            route: '/custom-layout/roles',
+            icon: 'mat:format_list_bulleted',
+            routerLinkActiveOptions: { exact: true }
+          },
+          {
+            type: 'link',
+            label: 'User Groups',
+            route: '/custom-layout/user-groups',
+            icon: 'mat:format_list_bulleted',
             routerLinkActiveOptions: { exact: true }
           }
         ]

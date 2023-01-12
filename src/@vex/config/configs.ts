@@ -5,10 +5,10 @@ import { ColorSchemeName } from './colorSchemeName';
 import { colorVariables } from '../components/config-panel/color-variables';
 
 const defaultConfig: VexConfig = {
-  id: VexConfigName.apollo,
-  name: 'Apollo',
+  id: VexConfigName.ares,
+  name: 'Ares',
   style: {
-    colorScheme: ColorSchemeName.default,
+    colorScheme: ColorSchemeName.light,
     colors: {
       primary: colorVariables.blue
     },
@@ -21,11 +21,11 @@ const defaultConfig: VexConfig = {
     }
   },
   direction: 'ltr',
-  imgSrc: '//vex-landing.visurel.com/assets/img/layouts/apollo.png',
+  imgSrc: '//vex-landing.visurel.com/assets/img/layouts/Ares.png',
   layout: 'horizontal',
   boxed: false,
   sidenav: {
-    title: 'VEX',
+    title: 'NAQABA',
     imageUrl: 'assets/img/demo/logo.svg',
     showCollapsePin: true,
     user: {
