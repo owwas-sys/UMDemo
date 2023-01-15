@@ -23,9 +23,10 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { BreadcrumbsModule } from '@vex/components/breadcrumbs/breadcrumbs.module';
 import { PageLayoutModule } from '@vex/components/page-layout/page-layout.module';
 import { UserGroupsComponent } from './user-management/user-groups/user-groups.component';
+import { UsersComponent } from './user-management/users/users.component';
 
 @NgModule({
-  declarations: [AppComponent, RolesComponent, UserGroupsComponent],
+  declarations: [AppComponent, RolesComponent, UserGroupsComponent, UsersComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

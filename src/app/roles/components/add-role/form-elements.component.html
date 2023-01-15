@@ -15,22 +15,22 @@
         <h2 class="title m-0">Add Role</h2>
       </div>
 
-      <div class="px-6 py-4 flex flex-col">
+      <div [formGroup]="form" class="px-6 py-4 flex flex-col">
 
         <div class="flex flex-col sm:flex-row sm:gap-4">
           <mat-form-field class="flex-auto">
             <mat-label>Name (Arabic)</mat-label>
-            <input matInput required>
+            <input matInput required formControlName="RoleNameAr">
           </mat-form-field>
           <mat-form-field class="flex-auto">
             <mat-label>Name (English)</mat-label>
-            <input matInput required>
+            <input matInput required formControlName="RoleName">
           </mat-form-field>
         </div>
 
         <mat-form-field>
           <mat-label>Description</mat-label>
-          <input #lengthHint matInput maxlength="200" required>
+          <input #lengthHint matInput maxlength="200" required formControlName="RoleDesc">
           <mat-hint align="start">Max 200 letters</mat-hint>
           <mat-hint align="end">{{lengthHint.value.length}}/200</mat-hint>
         </mat-form-field>
@@ -67,7 +67,7 @@
         
         <div class="flex items-center justify-end gap-2">
           <button mat-button type="button">Cancel</button>
-          <button color="primary" mat-raised-button type="button">Submit</button>
+          <button (click)="addRole()" color="primary" mat-raised-button type="button">Submit</button>
         </div>
       </div>
     </div>

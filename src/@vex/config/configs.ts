@@ -34,7 +34,7 @@ const defaultConfig: VexConfig = {
     search: {
       visible: true
     },
-    state: 'expanded'
+    state: 'collapsed'
   },
   toolbar: {
     fixed: true,

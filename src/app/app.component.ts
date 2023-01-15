@@ -137,6 +137,13 @@ export class AppComponent {
             route: '/custom-layout/user-groups',
             icon: 'mat:format_list_bulleted',
             routerLinkActiveOptions: { exact: true }
+          },
+          {
+            type: 'link',
+            label: 'Users',
+            route: '/custom-layout/users',
+            icon: 'mat:format_list_bulleted',
+            routerLinkActiveOptions: { exact: true }
           }
         ]
       }

@@ -5,40 +5,24 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { untilDestroyed } from '@ngneat/until-destroy';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
-import { RoleService } from './role.service';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { MatFormFieldDefaultOptions, MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
-import { stagger40ms } from '@vex/animations/stagger.animation';
-import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
+import { UserService } from './user.service';
 
-@UntilDestroy()
 @Component({
-  selector: 'vex-roles',
-  templateUrl: './roles.component.html',
-  styleUrls: ['./roles.component.scss'],
-  animations: [
-    fadeInUp400ms,
-    stagger40ms
-  ],
-  providers: [
-    {
-      provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
-      useValue: {
-        appearance: 'standard'
-      } as MatFormFieldDefaultOptions
-    }
-  ]
+  selector: 'vex-users',
+  templateUrl: './users.component.html',
+  styleUrls: ['./users.component.scss']
 })
-export class RolesComponent implements OnInit {
+export class UsersComponent implements OnInit {
 
   layoutCtrl = new UntypedFormControl('boxed');
 
   columns: any[] = [
     { label: 'ID', property: 'id', type: 'text', visible: true },
-    { label: 'Role Title (Arabic)', property: 'normalizedName', type: 'text', visible: true },
-    { label: 'Role Title (English)', property: 'name', type: 'text', visible: true },
-    { label: 'Party Type', property: 'partyType', type: 'text', visible: false },
+    { label: 'User', property: 'fullName', type: 'text', visible: true },
+    { label: 'UserName', property: 'userName', type: 'text', visible: true },
+    { label: 'Mobile #', property: 'phoneNumber', type: 'text', visible: false },
     { label: 'Created By', property: 'createdBy', type: 'text', visible: true },
     { label: 'Created Date', property: 'createdAt', type: 'text', visible: true },
     { label: 'Actions', property: 'actions', type: 'button', visible: true }
@@ -55,12 +39,12 @@ export class RolesComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
 
-  constructor(private router: Router, private roleService: RoleService) { }
+  constructor(private router: Router, private userService: UserService) { }
 
   ngOnInit(): void {
 
     this.dataSource = new MatTableDataSource();
-    this.getRoles();
+    this.getUsers();
 
     this.searchCtrl.valueChanges.pipe(
       untilDestroyed(this)
@@ -96,9 +80,9 @@ export class RolesComponent implements OnInit {
     this.dataSource.sort = this.sort;
   }
 
-  getRoles() {
+  getUsers() {
 
-    this.roleService.getAllRoles().subscribe(res => {
+    this.userService.getAllUsers().subscribe(res => {
       if (res.statusCode == 401) {
         return;
       }
@@ -108,15 +92,15 @@ export class RolesComponent implements OnInit {
     });
   }
 
-  createRole() {
-    this.router.navigateByUrl('custom-layout/add-role');
+  createUser() {
+    this.router.navigateByUrl('/add-user');
   }
 
-  updateRole(role) {
+  updateUser(role) {
 
   }
 
-  deleteRole(role) {
+  deleteUser(role) {
 
   }
 }
