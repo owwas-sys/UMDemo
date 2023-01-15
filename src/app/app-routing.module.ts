@@ -40,6 +40,13 @@ const routes: Routes = [
             data: {
               containerEnabled: true
             }
+      },
+      {
+        path: 'add-user-groups',
+        loadChildren: () => import('./user-management/add-user-groups/add-user-groups.module').then(m => m.AddUserGroupsModule),
+            data: {
+              containerEnabled: true
+            }
       }
     ]
   }

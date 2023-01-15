@@ -109,7 +109,7 @@ export class UserGroupsComponent implements OnInit {
   }
 
   createGroup() {
-    this.router.navigateByUrl('/add-group');
+    this.router.navigateByUrl('custom-layout/add-user-groups');
   }
 
   updateGroup(role) {

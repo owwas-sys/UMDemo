@@ -1,0 +1,140 @@
+<vex-secondary-toolbar current="Add Group">
+  <vex-breadcrumbs [crumbs]="['User Groups', 'Add User Group']" class="flex-auto"></vex-breadcrumbs>
+
+  <button class="ml-2" color="primary" mat-icon-button type="button">
+    <mat-icon svgIcon="mat:more_vert"></mat-icon>
+  </button>
+</vex-secondary-toolbar>
+
+
+<div [@stagger]="true" class="p-gutter container">
+
+  <div class="flex flex-col sm:flex-row gap-4">
+    <div @fadeInUp class="card flex-auto">
+      <div class="px-6 py-4 border-b flex items-center">
+        <h2 class="title m-0">Add User Group</h2>
+      </div>
+
+      <div [formGroup]="form" class="px-6 py-4 flex flex-col">
+
+        <div class="flex flex-col sm:flex-row sm:gap-4">
+          <mat-form-field class="flex-auto">
+            <mat-label>Name (Arabic)</mat-label>
+            <input matInput required formControlName="RoleNameAr">
+          </mat-form-field>
+          <mat-form-field class="flex-auto">
+            <mat-label>Name (English)</mat-label>
+            <input matInput required formControlName="RoleName">
+          </mat-form-field>
+        </div>
+
+        <mat-form-field>
+          <mat-label>Description</mat-label>
+          <input #lengthHint matInput maxlength="200" required formControlName="RoleDesc">
+          <mat-hint align="start">Max 200 letters</mat-hint>
+          <mat-hint align="end">{{lengthHint.value.length}}/200</mat-hint>
+        </mat-form-field>
+
+        <div class="flex flex-col sm:flex-row sm:gap-4">
+          <mat-form-field class="flex-auto">
+            <mat-label>Party Type</mat-label>
+            <input [formControl]="partyTypeCtrl" [matAutocomplete]="auto" matInput>
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option *ngFor="let partyType of filteredpartyTypes$ | async" [value]="partyType.name">
+                <span class="body-1">{{ partyType.name }}</span>
+              </mat-option>
+            </mat-autocomplete>
+
+            <button class="text-secondary" mat-icon-button matSuffix type="button">
+              <mat-icon svgIcon="mat:arrow_drop_down"></mat-icon>
+            </button>
+          </mat-form-field>
+
+          <mat-form-field class="flex-auto">
+            <mat-label>Party</mat-label>
+            <input [formControl]="partyCtrl" [matAutocomplete]="auto" matInput>
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option *ngFor="let party of filteredparties$ | async" [value]="party.name">
+                <span class="body-1">{{ party.name }}</span>
+              </mat-option>
+            </mat-autocomplete>
+
+            <button class="text-secondary" mat-icon-button matSuffix type="button">
+              <mat-icon svgIcon="mat:arrow_drop_down"></mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
+
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Roles List-->
+<div [@stagger]="true" class="p-gutter container -mt-6">
+
+  <div class="card overflow-auto">
+    <div class="bg-app-bar px-6 h-16 border-b sticky left-0 flex items-center">
+      <h2 class="title my-0 ltr:pr-4 rtl:pl-4 ltr:mr-4 rtl:ml-4 ltr:border-r rtl:border-l hidden sm:block flex-none">
+        <span *ngIf="selection.isEmpty()">Roles In This Group</span>
+        <span *ngIf="selection.hasValue()">{{ selection.selected.length }}
+          Role<span *ngIf="selection.selected.length > 1">s</span> selected</span>
+      </h2>
+  
+      <div
+        class="bg-foreground rounded-full border px-4 max-w-[300px] flex-auto flex items-center border border-gray-300">
+        <mat-icon class="icon-sm text-secondary" svgIcon="mat:search"></mat-icon>
+        <input [formControl]="searchCtrl" class="px-4 py-2 border-0 outline-none w-full bg-transparent"
+          placeholder="Search..." type="search">
+      </div>
+  
+      <span class="flex-1"></span>
+      
+    </div>
+  
+    <table @stagger [dataSource]="dataSource" class="w-full" mat-table matSort>
+  
+      <!--- Note that these columns can be defined in any order.
+    The actual rendered columns are set as a property on the row definition" -->
+  
+      <!-- Action Column -->
+      <ng-container matColumnDef="checkbox">
+        <th *matHeaderCellDef mat-header-cell>
+          <mat-checkbox (change)="$event ? masterToggle() : null"
+                        [checked]="selection.hasValue() && isAllSelected()"
+                        [indeterminate]="selection.hasValue() && !isAllSelected()"
+                        color="primary">
+          </mat-checkbox>
+        </th>
+        <td *matCellDef="let row" class="w-4" mat-cell>
+          <mat-checkbox (change)="$event ? selection.toggle(row) : null"
+                        (click)="$event.stopPropagation()"
+                        [checked]="selection.isSelected(row)"
+                        color="primary">
+          </mat-checkbox>
+        </td>
+      </ng-container>
+  
+      <!-- Text Columns -->
+      <ng-container *ngFor="let column of columns; trackBy: trackByProperty">
+          <ng-container *ngIf="column.type === 'text'" [matColumnDef]="column.property">
+              <th *matHeaderCellDef class="uppercase" mat-header-cell mat-sort-header> {{ column.label }}</th>
+              <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell>{{ row[column.property] }}</td>
+          </ng-container>
+      </ng-container>
+  
+      <tr *matHeaderRowDef="visibleColumns" mat-header-row></tr>
+      <tr (click)="updateRole(row)" *matRowDef="let row; columns: visibleColumns;" @fadeInUp
+          class="hover:bg-hover trans-ease-out cursor-pointer" mat-row></tr>
+    </table>
+  
+    <mat-paginator [pageSizeOptions]="pageSizeOptions" [pageSize]="pageSize" class="sticky left-0"></mat-paginator>
+  </div>
+
+  <div class="flex items-center justify-end gap-2 mt-4">
+    <button mat-button type="button">Cancel</button>
+    <button color="primary" mat-raised-button type="button">Submit</button>
+  </div>
+</div>
+
